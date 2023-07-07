@@ -1,6 +1,7 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import ru.netology.comarator.TicketByTimeAscComparator;
 import ru.netology.domain.Ticket;
 import ru.netology.exception.AlreadyExistsException;
 import ru.netology.exception.NotFoundException;
@@ -13,7 +14,7 @@ public class TicketManagerTest {
     private Ticket[] tickets = {
             new Ticket(1, "VKO", "NSK", 10000, 20),
             new Ticket(2, "DME", "CSH", 60000, 30),
-            new Ticket(3, "DME", "OMS", 30000, 10),
+            new Ticket(3, "DME", "OMS", 30000, 50),
             new Ticket(4, "DME", "OMS", 40000, 20),
             new Ticket(5, "DME", "OMS", 20000, 30)
     };
@@ -72,6 +73,13 @@ public class TicketManagerTest {
     public void shouldFindTicketsAndSortByPriceAsc() {
         Ticket[] expected = new Ticket[]{tickets[4], tickets[2], tickets[3]};
         Ticket[] actual = ticketManager.findAll("DME", "OMS");
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindTicketsAndSortByTimeAsc() {
+        Ticket[] expected = new Ticket[]{tickets[3], tickets[4], tickets[2]};
+        Ticket[] actual = ticketManager.findAll("DME", "OMS", new TicketByTimeAscComparator());
         assertArrayEquals(expected, actual);
     }
 }
